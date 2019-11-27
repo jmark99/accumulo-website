@@ -348,6 +348,8 @@
                 
                 <div class="row doc-sidebar-link"><a href="/docs/2.x/administration/scan-executors">Scan Executors </a></div>
                 
+                <div class="row doc-sidebar-link"><a href="/docs/2.x/administration/erasure-coding">Erasure Coding </a></div>
+                
               </div>
             </div>
           
@@ -460,6 +462,9 @@ For convenience, consider adding <code class="highlighter-rouge">accumulo-2.0.0/
 
 <p>Accumulo requires running <a href="https://zookeeper.apache.org/">Zookeeper</a> and <a href="https://hadoop.apache.org/">HDFS</a> instances which should be set up
 before configuring Accumulo.</p>
+
+<p><strong>Important note:</strong> If using <a href="https://hadoop.apache.org/docs/r3.2.0/hadoop-project-dist/hadoop-hdfs/HDFSErasureCoding.html">Erasure Coding</a> (EC), data loss will occur unless it is configured
+properly for Accumulo. Please see the <a href="/docs/2.x/administration/erasure-coding">Erasure Coding guide</a> for more information.</p>
 
 <p>The primary configuration files for Accumulo are <a href="/docs/2.x/configuration/files#accumuloproperties">accumulo.properties</a>, <a href="/docs/2.x/configuration/files#accumulo-envsh">accumulo-env.sh</a>,
 and <a href="/docs/2.x/configuration/files#accumulo-clientproperties">accumulo-client.properties</a> which are located in the <code class="highlighter-rouge">conf/</code> directory.</p>
