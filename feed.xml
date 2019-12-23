@@ -6,10 +6,67 @@
 </description>
     <link>https://accumulo.apache.org/</link>
     <atom:link href="https://accumulo.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 26 Nov 2019 20:55:51 -0500</pubDate>
-    <lastBuildDate>Tue, 26 Nov 2019 20:55:51 -0500</lastBuildDate>
+    <pubDate>Mon, 23 Dec 2019 11:42:13 -0500</pubDate>
+    <lastBuildDate>Mon, 23 Dec 2019 11:42:13 -0500</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
+    
+      <item>
+        <title>Accumulo Clients in Other Programming Languages</title>
+        <description>&lt;p&gt;Apache Accumulo has an &lt;a href=&quot;https://github.com/apache/accumulo-proxy&quot;&gt;Accumulo Proxy&lt;/a&gt; that allows communication with Accumulo using clients written
+in languages other than Java. This blog post shows how to run the Accumulo Proxy process using &lt;a href=&quot;https://github.com/apache/fluo-uno&quot;&gt;Uno&lt;/a&gt;
+and communicate with Accumulo using a Python client.&lt;/p&gt;
+
+&lt;p&gt;First, clone the &lt;a href=&quot;https://github.com/apache/accumulo-proxy&quot;&gt;Accumulo Proxy&lt;/a&gt; repository.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/apache/accumulo-proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Assuming you have &lt;a href=&quot;https://github.com/apache/fluo-uno&quot;&gt;Uno&lt;/a&gt; set up on your machine, configure &lt;code class=&quot;highlighter-rouge&quot;&gt;uno.conf&lt;/code&gt; to start the &lt;a href=&quot;https://github.com/apache/accumulo-proxy&quot;&gt;Accumulo Proxy&lt;/a&gt;
+by setting the configuration below:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export POST_RUN_PLUGINS=&quot;accumulo-proxy&quot;
+export PROXY_REPO=/path/to/accumulo-proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the following command to set up Accumulo again. The Proxy will be started after Accumulo runs.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;uno setup accumulo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After Accumulo is set up, you should see the following output from uno:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Executing post run plugin: accumulo-proxy
+Installing Accumulo Proxy at /path/to/fluo-uno/install/accumulo-proxy-2.0.0-SNAPSHOT
+Accumulo Proxy 2.0.0-SNAPSHOT is running
+    * view logs at /path/to/fluo-uno/install/logs/accumulo-proxy/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, follow the instructions below to create a Python 2.7 client that creates an Accumulo table
+named &lt;code class=&quot;highlighter-rouge&quot;&gt;pythontest&lt;/code&gt; and writes data to it:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir accumulo-client/
+cd accumulo-client/
+pipenv --python 2.7
+pipenv install thrift
+pipenv install -e /path/to/accumulo-proxy/src/main/python
+cp /path/to/accumulo-proxy/src/main/python/example.py .
+# Edit credentials if needed
+vim example.py
+pipenv run python2 example.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Verify that the table was created or data was written using &lt;code class=&quot;highlighter-rouge&quot;&gt;uno ashell&lt;/code&gt; or the Accumulo monitor.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 16 Dec 2019 00:00:00 -0500</pubDate>
+        <link>https://accumulo.apache.org/blog/2019/12/16/accumulo-proxy.html</link>
+        <guid isPermaLink="true">https://accumulo.apache.org/blog/2019/12/16/accumulo-proxy.html</guid>
+        
+        
+        <category>blog</category>
+        
+      </item>
     
       <item>
         <title>Checking API use</title>
@@ -1287,48 +1344,6 @@ to attendees. If you are interested in a corporate sponsorship, please feel free
         
         
         <category>blog</category>
-        
-      </item>
-    
-      <item>
-        <title>Apache Accumulo 2.0.0-alpha-2</title>
-        <description>&lt;p&gt;Apache Accumulo 2.0.0-alpha-2 contains numerous changes since the alpha-2. This
-alpha release is a preview of features coming in 2.0.0. It is being made
-available for preview, testing, and evaluation of those upcoming features, but
-is &lt;em&gt;not yet suitable for production use&lt;/em&gt;. API, packaging, and other changes may
-still occur before a final 2.0.0 release.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/docs/2.x/&quot;&gt;User Manual&lt;/a&gt; - In-depth developer and administrator documentation&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/docs/2.x/apidocs/&quot;&gt;Javadocs&lt;/a&gt; - Accumulo 2.0 API (subject to change)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;notable-changes&quot;&gt;Notable Changes&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Please see the &lt;a href=&quot;/release/accumulo-2.0.0&quot;&gt;draft release notes for 2.0.0&lt;/a&gt; for a list of the
-changes coming in 2.0.0, many of which are either complete, or nearly
-complete in this alpha release.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;since-200-alpha-1&quot;&gt;Since 2.0.0-alpha-1&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;New Map Reduce API &lt;a href=&quot;https://github.com/apache/accumulo/issues/743&quot;&gt;#743 &lt;/a&gt; &lt;a href=&quot;https://github.com/apache/accumulo/issues/751&quot;&gt;#751 &lt;/a&gt; &lt;a href=&quot;https://github.com/apache/accumulo/issues/753&quot;&gt;#753 &lt;/a&gt; &lt;a href=&quot;https://github.com/apache/accumulo/issues/803&quot;&gt;#803 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Deprecated existing map reduce API &lt;a href=&quot;https://github.com/apache/accumulo/commit/2465562cd088b126bfb17523c33c8acd0a48309f&quot;&gt;2465562&lt;/a&gt; &lt;a href=&quot;https://github.com/apache/accumulo/issues/804&quot;&gt;#804 &lt;/a&gt;  &lt;a href=&quot;https://github.com/apache/accumulo/issues/892&quot;&gt;#892 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Added ability to create scanners with default auths &lt;a href=&quot;https://github.com/apache/accumulo/issues/744&quot;&gt;#744 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Updated AccumuloClient builder API &lt;a href=&quot;https://github.com/apache/accumulo/issues/792&quot;&gt;#792 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;AccumuloClient was made Closeable &lt;a href=&quot;https://github.com/apache/accumulo/issues/718&quot;&gt;#718 &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Scanners close server side sessions on close &lt;a href=&quot;https://github.com/apache/accumulo/issues/813&quot;&gt;#813 &lt;/a&gt; &lt;a href=&quot;https://github.com/apache/accumulo/issues/905&quot;&gt;#905 &lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Thu, 31 Jan 2019 00:00:00 -0500</pubDate>
-        <link>https://accumulo.apache.org/release/accumulo-2.0.0-alpha-2/</link>
-        <guid isPermaLink="true">https://accumulo.apache.org/release/accumulo-2.0.0-alpha-2/</guid>
-        
-        
-        <category>release</category>
         
       </item>
     
