@@ -6,8 +6,8 @@
 </description>
     <link>https://accumulo.apache.org/</link>
     <atom:link href="https://accumulo.apache.org/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 23 Dec 2019 11:42:13 -0500</pubDate>
-    <lastBuildDate>Mon, 23 Dec 2019 11:42:13 -0500</lastBuildDate>
+    <pubDate>Thu, 09 Jan 2020 23:45:28 -0500</pubDate>
+    <lastBuildDate>Thu, 09 Jan 2020 23:45:28 -0500</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
     
@@ -50,10 +50,10 @@ cd accumulo-client/
 pipenv --python 2.7
 pipenv install thrift
 pipenv install -e /path/to/accumulo-proxy/src/main/python
-cp /path/to/accumulo-proxy/src/main/python/example.py .
+cp /path/to/accumulo-proxy/src/main/python/basic_client.py .
 # Edit credentials if needed
-vim example.py
-pipenv run python2 example.py
+vim basic_client.py
+pipenv run python2 basic_client.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Verify that the table was created or data was written using &lt;code class=&quot;highlighter-rouge&quot;&gt;uno ashell&lt;/code&gt; or the Accumulo monitor.&lt;/p&gt;

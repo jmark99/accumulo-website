@@ -183,10 +183,10 @@ cd accumulo-client/
 pipenv --python 2.7
 pipenv install thrift
 pipenv install -e /path/to/accumulo-proxy/src/main/python
-cp /path/to/accumulo-proxy/src/main/python/example.py .
+cp /path/to/accumulo-proxy/src/main/python/basic_client.py .
 # Edit credentials if needed
-vim example.py
-pipenv run python2 example.py
+vim basic_client.py
+pipenv run python2 basic_client.py
 </code></pre></div></div>
 
 <p>Verify that the table was created or data was written using <code class="highlighter-rouge">uno ashell</code> or the Accumulo monitor.</p>
@@ -202,7 +202,7 @@ pipenv run python2 example.py
 
   <p><a href="https://www.apache.org/foundation/contributing"><img src="https://www.apache.org/images/SupportApache-small.png" alt="Support the ASF" id="asf-logo" height="100" /></a></p>
 
-  <p>Copyright © 2011-2019 <a href="https://www.apache.org">The Apache Software Foundation</a>.
+  <p>Copyright © 2011-2020 <a href="https://www.apache.org">The Apache Software Foundation</a>.
 Licensed under the <a href="https://www.apache.org/licenses/">Apache License, Version 2.0</a>.</p>
 
   <p>Apache®, the names of Apache projects and their logos, and the multicolor feather
