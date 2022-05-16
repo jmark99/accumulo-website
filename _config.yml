@@ -46,6 +46,13 @@ defaults:
       permalink: "/tour/:basename/"
   -
     scope:
+      path: "tour2"
+      type: "pages"
+    values:
+      layout: "tour2"
+      permalink: "/tour2/:basename/"
+  -
+    scope:
       path: "_posts/blog"
       type: "posts"
     values:

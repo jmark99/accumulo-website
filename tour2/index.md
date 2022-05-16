@@ -1,5 +1,5 @@
 ---
-title: Accumulo Tour
+title: Accumulo Tour2
 layout: page
 permalink: /tour2/
 skiph1fortitle: true
