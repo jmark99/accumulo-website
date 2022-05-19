@@ -9,15 +9,14 @@ skiph1fortitle: true
 {% assign first_url = tour_pages[0] | prepend: '/tour2/' | append: '/' %}
 {% assign first_page = site.pages | where:'url',first_url | first %}
 
-JSHELL
-
-Welcome to the Accumulo tour! The tour offers a hands on introduction to the [Accumulo Java API](/api), broken down into
-independent steps and exercises. The exercises give you a chance to apply what you have learned by writing code on your
-own. The answers to an exercise are typically provided in the next step.  The tour begins at the
+Welcome to the Accumulo tour! The tour offers a hands-on introduction to the [Accumulo Java API](/api), 
+broken down into independent steps and exercises. The exercises give you a chance to apply what you
+have learned by writing code on your own using JShell. The answers to an exercise are typically 
+provided in the next step.  The tour begins at the
 [{{ first_page.title }}]({{ first_url }}) page.
 
-When on a tour page, the left and right keys on the keyboard can be used to navigate. If you have any questions
-or suggestions while going through the tour, please send an email to our [mailing list][mlist]
+When on a tour page, the left and right keys on the keyboard can be used to navigate. If you have
+any questions or suggestions while going through the tour, please email our [mailing list][mlist]
 or [create an issue][issue].
 
 {% for p in tour_pages %}

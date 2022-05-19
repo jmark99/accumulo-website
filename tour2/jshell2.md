@@ -1,15 +1,3 @@
-```Java
-// Page 2:
-
-// Start by listing default tables and instance operations to get instance ID
-
-for (String t : client.tableOperations().list())
-  System.out.println("Table: " + t);
-
-System.out.println("Instance ID: " + client.instanceOperations().getInstanceID());
-
-```
-
 
 ```Java
 
