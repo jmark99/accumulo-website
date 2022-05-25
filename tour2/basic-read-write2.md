@@ -19,46 +19,48 @@ Accumulo uses Mutation objects to hold all changes to a row in a table. Each row
 ID. 
 
 ```java
-jshell> Mutation mutation = new Mutation("id0001");
+jshell> Mutation mutation1 = new Mutation("id0001");
 ```
 ```commandLine
-mutation ==> org.apache.accumulo.core.data.Mutation@1
+mutation1 ==> org.apache.accumulo.core.data.Mutation@1
 ```
 
 Create key/value pairs for Batman.  Put them in the "hero" family.
 ```java
-jshell> mutation.put("hero","alias", "Batman");
-jshell> mutation.put("hero","name", "Bruce Wayne");
-jshell> mutation.put("hero","wearsCape?", "true");
+jshell> mutation1.put("hero","alias", "Batman");
+jshell> mutation1.put("hero","name", "Bruce Wayne");
+jshell> mutation1.put("hero","wearsCape?", "true");
 ```
 
-Create a BatchWriter to the GothamPD table and add your mutation to it. Try w/ resources will 
+Create a BatchWriter to the GothamPD table and add your mutation to it. Try-with-resources will 
 close for us.
 ```java
 jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-  ...>   writer.addMutation(mutation);
-}
+  ...>   writer.addMutation(mutation1);
+  ...>  }
 ```
-Read and print all rows of the "GothamPD" table. Try w/ resources will close for us.
+Read and print all rows of the "GothamPD" table.
 
 Note that within the JShell environment, references to Scanner are ambiguous since it matches both 
-interface org.apache.accumulo.core.client.Scanner and class java.util.Scanner. This can be resolved 
-by either using the fully qualified name for the Scanner, or more easily, by using the Base class, 
-ScannerBase, in place of Scanner (this should generally only be required when within the JShell environment).
+interface ```org.apache.accumulo.core.client.Scanner``` and class ```java.util.Scanner```. This can 
+be resolved by either using the fully qualified name for the Scanner, or more easily, by using the 
+base class, ```ScannerBase```, in place of ```Scanner``` (this should generally only be required when 
+within the JShell environment).
 
 ```java
 jshell> try (ScannerBase scan = client.createScanner("GothamPD", Authorizations.EMPTY)) {
    ...>   System.out.println("Gotham Police Department Persons of Interest:");
-   ...>   for(Map.Entry<Key, Value> entry:scan) {
-   ...>     System.out.printf("Key : %-50s  Value : %s\n",entry.getKey(),entry.getValue());
+   ...>   for(Map.Entry<Key, Value> entry : scan) {
+   ...>     System.out.printf("Key : %-50s  Value : %s\n", entry.getKey(), entry.getValue());
    ...>   }
    ...> }
+```
+```commandline
 Gotham Police Department Persons of Interest:
-Key : id0001 hero:alias [] 1652803171810 false            Value : Batman
-Key : id0001 hero:name [] 1652803171810 false             Value : Bruce Wayne
-Key : id0001 hero:wearsCape? [] 1652803171810 false       Value : true
-Key : id0001b hero:alias [] 1652811734319 false           Value : Batman
-Key : id0001b hero:name [] 1652811734319 false            Value : Bruce Wayne
+Key : id0001 hero:alias [] 1653498888818 false            Value : Batman
+Key : id0001 hero:name [] 1653498888818 false             Value : Bruce Wayne
+Key : id0001 hero:wearsCape? [] 1653498888818 false       Value : true
+
 ```
 
 Be aware the timestamps will differ for you.

@@ -5,8 +5,8 @@ title: Getting Started
 To complete the tour you will need a running Accumulo instance. If you do not have access to an 
 Accumulo cluster you can use [fluo-uno] to set up a single node instance for use with the Tour.
 
-Once you have an instance up and running, start the Accumulo JShell interface by typing (where '$' 
-is your system prompt).
+Once you have an instance up and running, start the Accumulo JShell interface by typing. The '$' 
+represents the system prompt.
 
 ```
 $ accumulo jshell

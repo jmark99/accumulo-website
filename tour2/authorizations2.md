@@ -20,12 +20,22 @@ Create a "secretId" authorization & visibility.
 
 ```java
 jshell> String secretId = "secretId";
+```
+```commandline
 secretId ==> "secretId"
+```
 
+```java
 jshell> Authorizations auths = new Authorizations(secretId);
+```
+```commandline
 auths ==> secretId
-    
+```
+
+```java    
 jshell> ColumnVisibility colVis = new ColumnVisibility(secretId);
+```
+```commandline
 colVis ==> [secretId]
 ```
 
@@ -44,9 +54,9 @@ above secures the "name" columns.
 What data do you see?
 
 * You should see all the data except the secret identities of Batman and Robin. This is because the 
-* `Scanner` was created from the root user which doesn't have the `secretId` authorization.
+`Scanner` was created from the root user which doesn't have the `secretId` authorization.
 * Replace the `Authorizations.EMPTY` in the Scanner with the `auths` variable created above and run 
-* it again. This should result in an error since the root user doesn't have the authorizations we 
+it again. This should result in an error since the root user doesn't have the authorizations we 
 tried to pass to the Scanner.
 
 Next, create a client for the "commissioner". Using the commissioner client, create a Scanner with the 

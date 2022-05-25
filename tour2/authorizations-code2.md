@@ -44,14 +44,14 @@ jshell> mutation3.put("villain", "wearsCape?", "false");
 ```
 
 Create a BatchWriter to the GothamPD table and add your mutations to it.
-Once the BatchWriter is closed by the try w/ resources, data will be available to scans.
+Once the BatchWriter is closed the data will be available to scans.
 
 ```java
-    try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-      writer.addMutation(mutation1);
-      writer.addMutation(mutation2);
-      writer.addMutation(mutation3);
-    }
+jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
+    ...>   writer.addMutation(mutation1);
+    ...>   writer.addMutation(mutation2);
+    ...>   writer.addMutation(mutation3);
+    ...> }
 ```
 
 Create a second client for the commissioner user and output all the rows visible to them.
