@@ -2,8 +2,6 @@
 title: Ranges and Splits
 ---
 
-JSHELL
-
 A [Range] is a specified group of `Key`s. There are many different ways to create a `Range`.  Here are a few examples:
 
 ```java

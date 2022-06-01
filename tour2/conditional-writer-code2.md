@@ -2,8 +2,6 @@
 title: Conditional Writer Code
 ---
 
-JSHELL
-
 Below is a solution to the exercise.
 
 ```java

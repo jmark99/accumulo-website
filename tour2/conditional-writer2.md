@@ -2,8 +2,6 @@
 title: Conditional Writer
 ---
 
-JSHELL
-
 Suppose the Gotham PD is storing home addresses for persons of interest in
 Accumulo.  We want to correctly handle the case of multiple users editing the
 same address at the same time. The following sequence of events shows an example
@@ -36,6 +34,11 @@ starts multiple threads, with each thread doing the following.
 This process can result in threads overwriting each other changes.  The problem
 is the batch writer always makes the update, even when the value has
 changed since it was read.
+
+```java
+
+```
+
 
 ```java
   static String getAddress(AccumuloClient client, String id) {
