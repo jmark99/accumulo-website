@@ -36,36 +36,34 @@ is the batch writer always makes the update, even when the value has
 changed since it was read.
 
 ```java
-
+String getAddress(AccumuloClient client, String id) {
+  try (ScannerBase scan = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
+    scan.setRange(Range.exact(id, "location", "home"));
+    for (Entry<Key, Value> entry : scan) {
+      return entry.getvalue().toSring();
+    }
+    return null;
+    } catch (TabletNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+  }
 ```
 
+```java
+boolean setAddress(AccumuloClient client, String id, String expectedAddr, String newAddr) {
+  try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
+    Mutation mutation = new Mutation(id);
+    mutation.put("location", "home", newAddr);
+    writer.addMutation(mutation);
+    return true;
+  } catch(Exception e) {
+     throw new RuntimeException(e);
+  }
+}
+```
 
 ```java
-  static String getAddress(AccumuloClient client, String id) {
-    // The IsolatedScanner ensures partial changes to a row are not seen
-    try (Scanner scanner = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
-      scanner.setRange(Range.exact(id, "location", "home"));
-      for (Entry<Key,Value> entry : scanner) {
-        return entry.getValue().toString();
-      }
-      return null;
-    } catch (TableNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  static boolean setAddress(AccumuloClient client, String id, String expectedAddr, String newAddr) {
-    try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-      Mutation mutation = new Mutation(id);
-      mutation.put("location", "home", newAddr);
-      writer.addMutation(mutation);
-      return true;
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  public static Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) {
+Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) {
     return CompletableFuture.runAsync(() -> {
       String currAddr, newAddr;
       do {
@@ -76,8 +74,10 @@ changed since it was read.
       } while (!setAddress(client, id, currAddr, newAddr));
     }
   }
+```
 
-  static void exercise(AccumuloClient client) throws Exception {
+
+```java
     client.tableOperations().create("GothamPD");
     String id = "id0001";
     setAddress(client, id, null, "  1007 Mountain Drive, Gotham, New York  ");
@@ -98,7 +98,6 @@ changed since it was read.
 
     // Print the address stored in Accumulo
     System.out.println("Final address : '"+getAddress(client, id)+"'");
-  }
 ```
 
 The following is one of a few possible outputs.  Notice that only the
