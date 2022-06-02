@@ -36,68 +36,72 @@ is the batch writer always makes the update, even when the value has
 changed since it was read.
 
 ```java
-String getAddress(AccumuloClient client, String id) {
-  try (ScannerBase scan = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
-    scan.setRange(Range.exact(id, "location", "home"));
-    for (Entry<Key, Value> entry : scan) {
-      return entry.getvalue().toSring();
-    }
-    return null;
-    } catch (TabletNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-  }
+jshell> String getAddress(AccumuloClient client, String id) {
+    ...>   try (org.apache.accumulo.core.client.Scanner scan = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
+    ...>     scan.setRange(Range.exact(id, "location", "home"));
+    ...>     for (Map.Entry<Key, Value> entry : scan) {
+    ...>       return entry.getValue().toString();
+    ...>     }
+    ...>     return null;
+    ...>   } catch (TableNotFoundException e) {
+    ...>     throw new RuntimeException(e);
+    ...>   }
+    ...> }
+    |  created method getAddress(AccumuloClient,String)
+
 ```
 
 ```java
-boolean setAddress(AccumuloClient client, String id, String expectedAddr, String newAddr) {
-  try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-    Mutation mutation = new Mutation(id);
-    mutation.put("location", "home", newAddr);
-    writer.addMutation(mutation);
-    return true;
-  } catch(Exception e) {
-     throw new RuntimeException(e);
-  }
-}
+jshell> boolean setAddress(AccumuloClient client, String id, String expectedAddr, String newAddr) {
+   ...>   try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
+   ...>     Mutation mutation = new Mutation(id);
+   ...>     mutation.put("location", "home", newAddr);
+   ...>     writer.addMutation(mutation);
+   ...>     return true;
+   ...>   } catch (Exception e) {
+   ...>     throw new RuntimeException(e);
+   ...>   }
+   ...> }
+|  created method setAddress(AccumuloClient,String,String,String)
+
 ```
 
 ```java
-Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) {
-    return CompletableFuture.runAsync(() -> {
-      String currAddr, newAddr;
-      do {
-       currAddr = getAddress(client, id);
-       newAddr = modifier.apply(currAddr);
-       System.out.printf("Thread %3d attempting change %20s -> %-20s\n",
-       Thread.currentThread().getId(), "'"+currAddr+"'", "'"+newAddr+"'");
-      } while (!setAddress(client, id, currAddr, newAddr));
-    }
-  }
+jshell> Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) {
+   ...>   return CompletableFuture.runAsync(() -> {
+   ...>     String currAddr, newAddr;
+   ...>     do {
+   ...>       currAddr = getAddress(client, id);
+   ...>       newAddr = modifier.apply(currAddr);
+   ...>       System.out.printf("Thread %3d attempting change %20s -> %-20s\n",
+   ...>       Thread.currentThread().getId(), "'"+currAddr+"'", "'"+newAddr+"'");
+   ...> 
+   ...>     } while (!setAddress(client, id, currAddr, newAddr));
+   ...>   });
+   ...> }
+|  created method modifyAddress(AccumuloClient,String,Function<String,String>)
 ```
 
 
 ```java
-    client.tableOperations().create("GothamPD");
-    String id = "id0001";
-    setAddress(client, id, null, "  1007 Mountain Drive, Gotham, New York  ");
+jshell> void concurrent_writes() throws Exception {
+   ...>   try {
+   ...>     client.tableOperations().create("GothamPD");
+   ...>   } catch (TableExistsException e) {
+   ...>     System.out.println("GothamPD table already exists...proceeding...");
+   ...>   }
+   ...>   String id = "id0001";
+   ...>   setAddress(client, id, null, "   1007 Mountain Drive, Gotham, New York  ");
+   ...>   Future<Void> future1 = modifyAddress(client, id, String::trim);
+   ...>   Future<Void> future2 = modifyAddress(client, id, addr -> addr.replace("Drive", "Dr"));
+   ...>   Future<Void> future3 = modifyAddress(client, id, addr -> addr.replace("New York", "NY"));
+   ...>   future1.get();
+   ...>   future2.get();
+   ...>   future3.get();
+   ...>   System.out.println("Final address : '" + getAddress(client, id) + "'");
+   ...> }
+|  created method concurrent_writes()
 
-    // Create async operation to trim whitespace
-    Future<Void> future1 = modifyAddress(client, id, String::trim);
-
-    // Create async operation to replace Dr with Drive
-    Future<Void> future2 = modifyAddress(client, id, addr -> addr.replace("Drive", "Dr"));
-
-    // Create async operation to replace New York with NY
-    Future<Void> future3 = modifyAddress(client, id, addr -> addr.replace("New York", "NY"));
-
-    // Wait for async operations to complete
-    future1.get();
-    future2.get();
-    future3.get();
-
-    // Print the address stored in Accumulo
-    System.out.println("Final address : '"+getAddress(client, id)+"'");
 ```
 
 The following is one of a few possible outputs.  Notice that only the
@@ -105,10 +109,13 @@ modification of `Drive` to `Dr` shows up in the final output.  The other
 modifications were lost.
 
 ```
-Thread  36 attempting change '  1007 Mountain Drive, Gotham, New York  ' -> '1007 Mountain Drive, Gotham, New York'
-Thread  38 attempting change '  1007 Mountain Drive, Gotham, New York  ' -> '  1007 Mountain Drive, Gotham, NY  '
-Thread  37 attempting change '  1007 Mountain Drive, Gotham, New York  ' -> '  1007 Mountain Dr, Gotham, New York  '
-Final address : '  1007 Mountain Dr, Gotham, New York  '
+jshell> concurrent_writes()
+GothamPD table already exists...proceeding...
+Thread  52 attempting change '   1007 Mountain Drive, Gotham, New York  ' -> '   1007 Mountain Drive, Gotham, NY  '
+Thread  38 attempting change '   1007 Mountain Drive, Gotham, New York  ' -> '1007 Mountain Drive, Gotham, New York'
+Thread  53 attempting change '   1007 Mountain Drive, Gotham, New York  ' -> '   1007 Mountain Dr, Gotham, New York  '
+Final address : '   1007 Mountain Dr, Gotham, New York  '
+
 ```
 
 To fix this example, make the following changes in `setAddress()` to use a
