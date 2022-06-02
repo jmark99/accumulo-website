@@ -1,28 +1,28 @@
 ---
 layout: default
 ---
-{% assign tour_pages = site.data.tour2.docs %}
+{% assign tour_pages = site.data.tour-jshell.docs %}
 {% for p in tour_pages %}
-{% assign doc_url = p | prepend: '/tour2/' | append: '/' %}
-{% if doc_url == page.url %}
-{% assign tour_num = forloop.index %}
-{% if forloop.first %}
-{% assign previous = -1 %}
-{% else %}
-{% assign previous = forloop.index0 | minus: 1 %}
-{% assign previous_page = tour_pages[previous] | prepend:"/tour2/" | append:"/" %}
-{% endif %}
-{% if forloop.last %}
-{% assign next = 0 %}
-{% else %}
-{% assign next = forloop.index0 | plus: 1 %}
-{% assign next_page = tour_pages[next] | prepend:"/tour2/" | append:"/" %}
-{% endif %}
-{% endif %}
+  {% assign doc_url = p | prepend: '/tour-jshell/' | append: '/' %}
+  {% if doc_url == page.url %}
+    {% assign tour_num = forloop.index %}
+    {% if forloop.first %}
+      {% assign previous = -1 %}
+    {% else %}
+      {% assign previous = forloop.index0 | minus: 1 %}
+      {% assign previous_page = tour_pages[previous] | prepend:"/tour-jshell/" | append:"/" %}
+    {% endif %}
+    {% if forloop.last %}
+      {% assign next = 0 %}
+    {% else %}
+      {% assign next = forloop.index0 | plus: 1 %}
+      {% assign next_page = tour_pages[next] | prepend:"/tour-jshell/" | append:"/" %}
+    {% endif %}
+  {% endif %}
 {% endfor %}
 
 <div id="tour-header">
-    <h2><a href="/tour2/">Accumulo Tour2</a>: {{ page.title }}</h2>
+    <h2><a href="/tour-jshell/">Accumulo Tour</a>: {{ page.title }}</h2>
     <p class="text-muted">Tour page {{ tour_num }} of {{ tour_pages.size }}</p>
 </div>
 <div id="tour-content">

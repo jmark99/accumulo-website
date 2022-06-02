@@ -78,7 +78,7 @@ Spoiler Alert: It is!  Did you notice the `Authorizations.EMPTY` we passed in wh
 Scanner didn't require any Authorizations to read it.  More to come later in the [Authorizations][auths] 
 lesson!
 
-[dmodel]: /tour2/data-model
-[auths]: /tour2/authorizations
+[dmodel]: /tour-jshell/data-model
+[auths]: /tour-jshell/authorizations
 [Key]: {% jurl org.apache.accumulo.core.data.Key %}
 [Scanner]: {% jurl org.apache.accumulo.core.client.Scanner %}

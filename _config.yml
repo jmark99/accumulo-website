@@ -46,11 +46,11 @@ defaults:
       permalink: "/tour/:basename/"
   -
     scope:
-      path: "tour2"
+      path: "tour-jshell"
       type: "pages"
     values:
-      layout: "tour2"
-      permalink: "/tour2/:basename/"
+      layout: "tour-jshell"
+      permalink: "/tour-jshell/:basename/"
   -
     scope:
       path: "_posts/blog"

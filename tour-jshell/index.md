@@ -1,12 +1,12 @@
 ---
-title: Accumulo Tour2
+title: Accumulo Tour
 layout: page
-permalink: /tour2/
+permalink: /tour-jshell/
 skiph1fortitle: true
 ---
 
-{% assign tour_pages = site.data.tour2.docs %}
-{% assign first_url = tour_pages[0] | prepend: '/tour2/' | append: '/' %}
+{% assign tour_pages = site.data.tour-jshell.docs %}
+{% assign first_url = tour_pages[0] | prepend: '/tour-jshell/' | append: '/' %}
 {% assign first_page = site.pages | where:'url',first_url | first %}
 
 Welcome to the Accumulo tour! The tour offers a hands-on introduction to the [Accumulo Java API](/api),
@@ -20,7 +20,7 @@ any questions or suggestions while going through the tour, please email our [mai
 or [create an issue][issue].
 
 {% for p in tour_pages %}
-  {% assign doc_url = p | prepend: '/tour2/' | append: '/' %}
+  {% assign doc_url = p | prepend: '/tour-jshell/' | append: '/' %}
   {% assign link_to_page = site.pages | where:'url',doc_url | first %}
   1. [{{ link_to_page.title }}]({{ doc_url }})
 {% endfor %}
