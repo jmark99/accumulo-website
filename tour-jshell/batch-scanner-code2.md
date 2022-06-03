@@ -4,35 +4,29 @@ title: Batch Scanner Code
 
 Below is a solution to the exercise.
 
-Once again, let's start with a fresh table by deleting any exiting table.
+Create a table called "GothamBatch".
 
-```java
-jshell> client.tableOperations().delete("GothamPD");
+```commandline
+jshell> client.tableOperations().create("GothamBatch");
 ```
 
-Create a table called "GothamPD".
+Generate 10,000 rows of villain data
 
-```java
-jshell> client.tableOperations().create("GothamPD");
-```
-
-Generate 10,000 rows of henchman data
-
-```java
-jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-jshell>   for (int i = 0; i < 10_000; i++) {
-jshell>     Mutation m = new Mutation(String.format("id%04d", i));
-jshell>     m.put("villain", "alias", "henchman" + i);
-jshell>     m.put("villain", "yearsOfService", "" + (new Random().nextInt(50)));
-jshell>     m.put("villain", "wearsCape?", "false");
-jshell>     writer.addMutation(m);
-jshell>   }
-jshell> }
+```commandline
+jshell> try (BatchWriter writer = client.createBatchWriter("GothamBatch")) {
+   ...>   for (int i = 0; i < 10_000; i++) {
+   ...>     Mutation m = new Mutation(String.format("id%04d", i));
+   ...>     m.put("villain", "alias", "henchman" + i);
+   ...>     m.put("villain", "yearsOfService", "" + (new Random().nextInt(50)));
+   ...>     m.put("villain", "wearsCape?", "false");
+   ...>    writer.addMutation(m);
+   ...>   }
+   ...> }
 ```
 
 Create a BatchScanner with 5 query threads
-```java
-jshell> try (BatchScanner batchScanner = client.createBatchScanner("GothamPD", Authorizations.EMPTY, 5)) {
+```commandline
+jshell> try (BatchScanner batchScanner = client.createBatchScanner("GothamBatch", Authorizations.EMPTY, 5)) {
    ...> 
    ...>   // Create a collection of 2 sample ranges and set it to the batchScanner
    ...>   List<Range>ranges = new ArrayList<Range>();

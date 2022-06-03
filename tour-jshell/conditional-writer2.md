@@ -16,7 +16,7 @@ of how this can go wrong.
  7. User 2 sets key `id0001:location:home` to `1007 Mountain Drive, Gotham, NY`
 
 In this situation the changes made by User 1 are lost, ending up with `1007
-Mountain Drive, Gotham, NY` instead of `1007 Mountain Dr, Gotham, NY`.  To
+Mountain Drive, Gotham, NY` instead of `1007 Mountain Dr, Gotham, New York`.  To
 correctly handle this, Accumulo offers the [ConditionalWriter].  The
 ConditionalWriter atomically checks conditions on a row and only applies a
 mutation when all conditions are satisfied.
@@ -31,12 +31,13 @@ starts multiple threads, with each thread doing the following.
  3. Write out the modified value from memory using a batch writer.
  4. If write was unsuccessful, then goto step 1.
 
-This process can result in threads overwriting each other changes.  The problem
-is the batch writer always makes the update, even when the value has
-changed since it was read.
+This process can result in threads overwriting each other's changes.  The problem is the batch writer 
+always makes the update, even when the value has changed since it was read.
+
+To simplify, we will create several small methods to illustrate the issue.
 
 ```java
-jshell> String getAddress(AccumuloClient client, String id) {
+jshell> String getAddress(AccumuloClient client, String id)  {
     ...>   try (org.apache.accumulo.core.client.Scanner scan = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
     ...>     scan.setRange(Range.exact(id, "location", "home"));
     ...>     for (Map.Entry<Key, Value> entry : scan) {
@@ -44,14 +45,12 @@ jshell> String getAddress(AccumuloClient client, String id) {
     ...>     }
     ...>     return null;
     ...>   } catch (TableNotFoundException e) {
-    ...>     throw new RuntimeException(e);
+    ...>       throw new RuntimeException(e);
     ...>   }
     ...> }
     |  created method getAddress(AccumuloClient,String)
 
-```
 
-```java
 jshell> boolean setAddress(AccumuloClient client, String id, String expectedAddr, String newAddr) {
    ...>   try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
    ...>     Mutation mutation = new Mutation(id);
@@ -59,15 +58,13 @@ jshell> boolean setAddress(AccumuloClient client, String id, String expectedAddr
    ...>     writer.addMutation(mutation);
    ...>     return true;
    ...>   } catch (Exception e) {
-   ...>     throw new RuntimeException(e);
-   ...>   }
+    ...>    throw new RuntimeException(e);
+    ...>  }
    ...> }
 |  created method setAddress(AccumuloClient,String,String,String)
 
-```
 
-```java
-jshell> Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) {
+jshell> Future<Void> modifyAddress(AccumuloClient client, String id, Function<String,String> modifier) throws Exception {
    ...>   return CompletableFuture.runAsync(() -> {
    ...>     String currAddr, newAddr;
    ...>     do {
@@ -80,10 +77,8 @@ jshell> Future<Void> modifyAddress(AccumuloClient client, String id, Function<St
    ...>   });
    ...> }
 |  created method modifyAddress(AccumuloClient,String,Function<String,String>)
-```
 
-
-```java
+        
 jshell> void concurrent_writes() throws Exception {
    ...>   try {
    ...>     client.tableOperations().create("GothamPD");

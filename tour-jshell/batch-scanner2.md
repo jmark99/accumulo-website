@@ -6,10 +6,10 @@ Running on a single thread, a `Scanner` will retrieve a single `Range` of data a
 sorted order. A [BatchScanner] will retrieve multiple `Range`s of data using multiple threads.  A 
 `BatchScanner` can be more efficient but does not guarantee `Key`s will be returned in sorted order.
 
-For this exercise, we need to generate a bunch of data to test BatchScanner.  Execute the code below 
-create our data set.
+For this exercise, we need to generate a bunch of data to test BatchScanner.  Execute the code below
+to create our data set.
 
-```java
+```commandline
 jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
    ...>   for (int i = 0; i < 10_000; i++) {
    ...>     Mutation m = new Mutation(String.format("id%04d", i));
@@ -21,8 +21,9 @@ jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
    ...> }
 ```
 
-We want to calculate the average years of service from a sample of 2000 villains. A BatchScanner would be good for this task because we
-don't need the returned keys to be sorted. Follow these steps to efficiently scan the table with 10,000 entries.
+We want to calculate the average years of service from a sample of 2000 villains. A BatchScanner would 
+be good for this task because we don't need the returned keys to be sorted. Follow these steps to 
+efficiently scan the table with 10,000 entries.
 
 1. After the above code, create a BatchScanner with five query threads.  Similar to a Scanner, use 
 the [createBatchScanner] method.

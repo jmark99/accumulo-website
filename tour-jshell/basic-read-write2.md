@@ -11,32 +11,33 @@ Our next exercise shows how to write and read from a table.
 Let's create a table called "GothamPD".
 
 At the JShell prompt, enter the following:
-```java
+```commandline
 jshell> client.tableOperations().create("GothamPD");
 ```
 
 Accumulo uses Mutation objects to hold all changes to a row in a table. Each row has a unique row
 ID. 
 
-```java
+```commandline
 jshell> Mutation mutation1 = new Mutation("id0001");
-```
-```commandLine
 mutation1 ==> org.apache.accumulo.core.data.Mutation@1
 ```
 
 Create key/value pairs for Batman.  Put them in the "hero" family.
-```java
+```commandline
 jshell> mutation1.put("hero","alias", "Batman");
+
 jshell> mutation1.put("hero","name", "Bruce Wayne");
+
 jshell> mutation1.put("hero","wearsCape?", "true");
 ```
 
 Create a BatchWriter to the GothamPD table and add your mutation to it. Try-with-resources will 
 close for us.
-```java
+
+```commandline
 jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
-  ...>   writer.addMutation(mutation1);
+  ...>    writer.addMutation(mutation1);
   ...>  }
 ```
 Read and print all rows of the "GothamPD" table.
@@ -47,20 +48,17 @@ be resolved by either using the fully qualified name for the Scanner, or more ea
 base class, ```ScannerBase```, in place of ```Scanner``` (this should generally only be required when 
 within the JShell environment).
 
-```java
+```commandline
 jshell> try (ScannerBase scan = client.createScanner("GothamPD", Authorizations.EMPTY)) {
    ...>   System.out.println("Gotham Police Department Persons of Interest:");
    ...>   for(Map.Entry<Key, Value> entry : scan) {
    ...>     System.out.printf("Key : %-50s  Value : %s\n", entry.getKey(), entry.getValue());
    ...>   }
    ...> }
-```
-```commandline
 Gotham Police Department Persons of Interest:
-Key : id0001 hero:alias [] 1653498888818 false            Value : Batman
-Key : id0001 hero:name [] 1653498888818 false             Value : Bruce Wayne
-Key : id0001 hero:wearsCape? [] 1653498888818 false       Value : true
-
+Key : id0001 hero:alias [] 1654274195071 false            Value : Batman
+Key : id0001 hero:name [] 1654274195071 false             Value : Bruce Wayne
+Key : id0001 hero:wearsCape? [] 1654274195071 false       Value : true
 ```
 
 Be aware the timestamps will differ for you.

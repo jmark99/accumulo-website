@@ -15,7 +15,7 @@ For the tour, you will use the ```client``` provided by the JShell to perform th
 The properties used to create the client can be viewed in the file contained in the `clientPropUrl`
 variable. 
 
-```java
+```commandline
 jshell> /vars
 |    URL clientPropUrl = file:<path_to_accumulo-client.properties file>
 ```
@@ -23,11 +23,8 @@ jshell> /vars
 Let's start by using table operations to list the default tables and instance operations to get 
 the instance ID.
 
-```java
-jshell> client.tableOperations().list().forEach(System.out::println)
-```
-
 ```commandline
+jshell> client.tableOperations().list().forEach(System.out::println)
 accumulo.metadata
 accumulo.replication
 accumulo.root
@@ -35,10 +32,8 @@ accumulo.root
 
 Now let's retrieve the instance ID.
 
-```java
+```commandline
 jshell> System.out.println(client.instanceOperations().getInstanceID());
-```
-```commandLine
 8b9839f7-cdc6-44ca-b527-43db45acc79f
 ```
 
@@ -51,7 +46,7 @@ Different types of operations are accessed by their respective method on the cli
 * client.replicationOperations();
 
 
-The client is also used directly to create Scanners and perform batch operations.  These will be
+The client is also used to create Scanners and perform batch operations.  These will be
 explored later.
 
 [AccumuloClient]: {% jurl org.apache.accumulo.core.client.AccumuloClient %}

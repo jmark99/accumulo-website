@@ -14,36 +14,29 @@ For example:
 * When Bob scans with all of his authorizations, he will **not** see `row1:family1:qualifier1`
 * When Tina scans with all of her authorizations, she will see `row1:family1:qualifier1`
 
-We now want to secure our secret identities of the heroes so that only users with the proper authorizations can read their names.
+For the next exercise we want to secure our secret identities of the heroes so that only users with 
+the proper authorizations can read their names.
 
 Create a "secretId" authorization & visibility.
 
-```java
+```commandline
 jshell> String secretId = "secretId";
-```
-```commandline
 secretId ==> "secretId"
-```
 
-```java
 jshell> Authorizations auths = new Authorizations(secretId);
-```
-```commandline
 auths ==> secretId
-```
 
-```java    
 jshell> ColumnVisibility colVis = new ColumnVisibility(secretId);
-```
-```commandline
 colVis ==> [secretId]
 ```
 
 Create a user with the "secretId" authorization and grant read permissions on our table.
 
-```java
+```commandline
 jshell> client.securityOperations().createLocalUser("commissioner", new PasswordToken("gordonrocks"));
+
 jshell> client.securityOperations().changeUserAuthorizations("commissioner", auths);
+
 jshell> client.securityOperations().grantTablePermission("commissioner", "GothamPD", TablePermission.READ);
 ```
 
