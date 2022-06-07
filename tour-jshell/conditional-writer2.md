@@ -36,7 +36,7 @@ always makes the update, even when the value has changed since it was read.
 
 To simplify, we will create several small methods to illustrate the issue.
 
-```java
+```commandline
 jshell> String getAddress(AccumuloClient client, String id)  {
     ...>   try (org.apache.accumulo.core.client.Scanner scan = new IsolatedScanner(client.createScanner("GothamPD", Authorizations.EMPTY))) {
     ...>     scan.setRange(Range.exact(id, "location", "home"));
@@ -58,8 +58,8 @@ jshell> boolean setAddress(AccumuloClient client, String id, String expectedAddr
    ...>     writer.addMutation(mutation);
    ...>     return true;
    ...>   } catch (Exception e) {
-    ...>    throw new RuntimeException(e);
-    ...>  }
+   ...>     throw new RuntimeException(e);
+   ...>   }
    ...> }
 |  created method setAddress(AccumuloClient,String,String,String)
 
@@ -103,7 +103,7 @@ The following is one of a few possible outputs.  Notice that only the
 modification of `Drive` to `Dr` shows up in the final output.  The other
 modifications were lost.
 
-```
+```commandline
 jshell> concurrent_writes()
 GothamPD table already exists...proceeding...
 Thread  52 attempting change '   1007 Mountain Drive, Gotham, New York  ' -> '   1007 Mountain Drive, Gotham, NY  '
