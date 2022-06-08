@@ -13,9 +13,7 @@ jshell> Mutation mutation1 = new Mutation("id0001");
 mutation1 ==> org.apache.accumulo.core.data.Mutation@1
 
 jshell> mutation1.put("hero","alias", "Batman");
-
 jshell> mutation1.put("hero","name", "Bruce Wayne");
-
 jshell> mutation1.put("hero","wearsCape?", "true");
 ```
 
@@ -25,9 +23,7 @@ jshell> Mutation mutation2 = new Mutation("id0002");
 mutation2 ==> org.apache.accumulo.core.data.Mutation@1
 
 jshell> mutation2.put("hero","alias", "Robin");
-
 jshell> mutation2.put("hero","name", "Dick Grayson");
-
 jshell> mutation2.put("hero","wearsCape?", "true");
 ```    
 
@@ -37,9 +33,7 @@ jshell> Mutation mutation3 = new Mutation("id0003");
 mutation3 ==> org.apache.accumulo.core.data.Mutation@1
 
 jshell> mutation3.put("villain","alias", "Joker");
-
 jshell> mutation3.put("villain","name", "Unknown");
-
 jshell> mutation3.put("villain","wearsCape?", "false");
 ```
 
@@ -65,7 +59,7 @@ jshell> try (ScannerBase scan = client.createScanner("GothamPD", Authorizations.
    ...>     System.out.printf("Key : %-50s  Value : %s\n", entry.getKey(), entry.getValue());
    ...>   }
    ...> }
-`Gotham Police Department Persons of Interest:
+Gotham Police Department Persons of Interest:
 Key : id0001 hero:alias [] 1511306370025 false            Value : Batman
 Key : id0001 hero:name [] 1511306370025 false             Value : Bruce Wayne
 Key : id0001 hero:wearsCape? [] 1511306370025 false       Value : true

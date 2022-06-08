@@ -19,7 +19,7 @@ scanner.setRange(new Range("id0000", "id0010"));  // returns rows from id0000 to
 
 As your data grows larger, Accumulo will split tables into smaller pieces called `Tablet`s which can
 be distributed across multiple Tablet Servers. By default, a table will get split into `Tablet`s on
-row boundaries, guaranteeing an entire row wile be on one Tablet Server.  We have the ability to
+row boundaries, guaranteeing an entire row will be on one Tablet Server.  We have the ability to
 tell Accumulo where to split tables by setting split points. This is done using `addSplits` in the 
 [TableOperations] API.  The image below demonstrates how Accumulo splits data.
 

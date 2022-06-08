@@ -30,7 +30,7 @@ It can be broken down as follows: <br/>
 | **Column Qualifier**: | alias |
 | **Value**: | Batman |
 
-As an exercise, add a few more rows to the GothamDB table.  Create a row for Robin (id0002), who is a 
+As an exercise, add a few more rows to the GothamPD table.  Create a row for Robin (id0002), who is a 
 hero that also wears a cape and his name is "Dick Grayson".  Create a row for Joker (id0003), who is 
 a villain with an "Unknown" name and doesn't wear a cape. Compare your output to the output displayed 
 on the next page.

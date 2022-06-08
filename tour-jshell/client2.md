@@ -37,7 +37,7 @@ jshell> System.out.println(client.instanceOperations().getInstanceID());
 8b9839f7-cdc6-44ca-b527-43db45acc79f
 ```
 
-Different types of operations are accessed by their respective method on the client:
+Different types of operations are accessed by their respective methods on the client:
 
 * client.tableOperations();
 * client.namespaceOperations();

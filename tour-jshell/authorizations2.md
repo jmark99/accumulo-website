@@ -2,7 +2,7 @@
 title: Authorizations
 ---
 
-[Authorizations] are a set of `String`s that enable a user to read protected data. Users are granted 
+[Authorizations] are a set of `String`'s that enable a user to read protected data. Users are granted 
 authorizations and choose which ones to use when scanning a table. The chosen authorizations are evaluated 
 against the [ColumnVisibility] of each Accumulo key in the scan. If the boolean expression of the 
 ColumnVisibility evaluates to true, the data will be visible to the user.
@@ -34,9 +34,7 @@ Create a user with the "secretId" authorization and grant read permissions on ou
 
 ```commandline
 jshell> client.securityOperations().createLocalUser("commissioner", new PasswordToken("gordonrocks"));
-
 jshell> client.securityOperations().changeUserAuthorizations("commissioner", auths);
-
 jshell> client.securityOperations().grantTablePermission("commissioner", "GothamPD", TablePermission.READ);
 ```
 

@@ -26,7 +26,9 @@ Use 'client' to interact with Accumulo
 jshell>
 ```
 
-It is possible to view the imports that are pre-loaded into the JShell session as well.
+JShell has a few commands that can be helpful.
+
+`/imports` lists the currently loaded imports in the JShell session.
 
 ```commandline
 jshell> /imports
@@ -63,6 +65,65 @@ jshell> /imports
 |    import org.apache.accumulo.hadoop.mapreduce.*
 |    import org.apache.accumulo.hadoop.mapreduce.partition.*
 |    import org.apache.hadoop.io.Text
+```
+
+`/vars` will display all currently defined variables.
+
+```commandline
+jshell> /vars
+|    URL clientPropUrl = file:/home/mark/dev/fluo-uno/install/accumulo-2.1.0-SNAPSHOT/conf/accumulo-client.properties
+|    AccumuloClient client = org.apache.accumulo.core.clientImpl.ClientContext@7cbee484
+```
+
+`/list` displays all user defined code snippets. 
+
+`/list <id>` displays the snippet with the specified id. 
+
+`/list <name>` displays the snippet with the specified name.
+
+`/<id>` will re-run the snippet with the given id. 
+
+For example:
+
+```commandline
+jshell> var x = 12;
+x ==> 12
+
+jshell> var y = 23;
+y ==> 23
+
+jshell> int add(int x, int y) {
+   ...>   return x + y;
+   ...> }
+|  created method add(int,int)
+
+jshell> add(4,5);
+$6 ==> 9      
+
+jshell> /list
+
+   1 : System.out.println("Preparing JShell for Apache Accumulo");
+   2 : var x = 12;
+   3 : var y = 23;
+   4 : int add(int x, int y) {
+         return x + y;
+       }
+
+ jshell> /list add
+
+   5 : int add(int x, int y) {
+         return x + y;
+       }
+
+jshell> /list 4
+
+   4 : int add(int x, int y) {
+         return x + y;
+       }
+       
+jshell> /4
+add(4,5);
+$8 ==> 9
 ```
 
 Ok, let's go!

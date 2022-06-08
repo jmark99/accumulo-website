@@ -26,9 +26,7 @@ mutation1 ==> org.apache.accumulo.core.data.Mutation@1
 Create key/value pairs for Batman.  Put them in the "hero" family.
 ```commandline
 jshell> mutation1.put("hero","alias", "Batman");
-
 jshell> mutation1.put("hero","name", "Bruce Wayne");
-
 jshell> mutation1.put("hero","wearsCape?", "true");
 ```
 
@@ -66,8 +64,8 @@ Be aware the timestamps will differ for you.
 Good job! That is all it takes to write and read from Accumulo.
 
 Notice a lot of other information was printed from the Keys we created. Accumulo is flexible 
-because hidden within its [Key] is a rich data model that can be broken up into different parts.  
-We will cover the [Data Model][dmodel] in the next lesson.
+because hidden within its [Key] is a rich data model that can be broken up into different parts. We 
+will cover the [Data Model][dmodel] in the next lesson.
 
 ### But wait... I thought Accumulo was all about Security?
 
@@ -76,7 +74,7 @@ Spoiler Alert: It is!  Did you notice the `Authorizations.EMPTY` we passed in wh
 Scanner didn't require any Authorizations to read it.  More to come later in the [Authorizations][auths] 
 lesson!
 
-[dmodel]: /tour-jshell/data-model
-[auths]: /tour-jshell/authorizations
+[dmodel]: /tour-jshell/data-model2
+[auths]: /tour-jshell/authorizations2
 [Key]: {% jurl org.apache.accumulo.core.data.Key %}
 [Scanner]: {% jurl org.apache.accumulo.core.client.Scanner %}

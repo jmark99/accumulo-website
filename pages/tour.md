@@ -17,9 +17,9 @@ Welcome to the Accumulo tour! The tour offers a hands-on introduction to the [Ac
 broken down into independent steps and exercises. The exercises give you a chance to apply what you have
 learned by writing code on your own. The answers to an exercise are typically provided in the next step.
 
-There are two options for using the tour. The first utilizes the Accumulo MiniAccumuloCluster and 
+There are two options for using the tour. The first utilizes the Accumulo's MiniAccumuloCluster and 
 standard Java class development to progress through the tour. The second uses the newer Accumulo
-JShell feature, first introduced in version 2.1.0, to complete the tour.
+JShell feature, introduced in version 2.1.0, to complete the tour.
 
 The MiniAccumuloCluster version can be found [here][mac-tour]. If using Accumulo 2.0.x, this is the 
 version that must be followed.

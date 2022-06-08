@@ -45,7 +45,7 @@ jshell> String getAddress(AccumuloClient client, String id)  {
     ...>     }
     ...>     return null;
     ...>   } catch (TableNotFoundException e) {
-    ...>       throw new RuntimeException(e);
+    ...>     throw new RuntimeException(e);
     ...>   }
     ...> }
     |  created method getAddress(AccumuloClient,String)

@@ -29,7 +29,7 @@ Create a BatchScanner with 5 query threads
 jshell> try (BatchScanner batchScanner = client.createBatchScanner("GothamBatch", Authorizations.EMPTY, 5)) {
    ...> 
    ...>   // Create a collection of 2 sample ranges and set it to the batchScanner
-   ...>   List<Range>ranges = new ArrayList<Range>();
+   ...>   List<Range> ranges = new ArrayList<Range>();
    ...> 
    ...>   // Create a collection of 2 sample ranges and set it to the batchScanner
    ...>   ranges.add(new Range("id1000", "id1999"));
