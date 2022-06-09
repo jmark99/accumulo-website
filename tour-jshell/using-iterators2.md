@@ -88,6 +88,13 @@ A `summingcombiner` can be used to accomplish this.
 ```commandline
 jshell> import org.apache.accumulo.core.iterators.user.SummingCombiner;
 jshell> import org.apache.accumulo.core.iterators.LongCombiner
+```
+
+Create an IteratorSetting object. Set the encoding type and indicate the columns to be summed.
+Also, it is a good idea to check for any iterator conflicts prior to attaching the iterator to the 
+table.
+
+```commandline
 jshell> IteratorSetting scSetting = new IteratorSetting(30, "sum", SummingCombiner.class);
 jshell> LongCombiner.setEncodingType(scSetting, LongCombiner.Type.STRING);
 jshell> scSetting.addOption("columns", "hero:villainsCaptured");
@@ -127,4 +134,8 @@ jshell> try ( org.apache.accumulo.core.client.Scanner scan = client.createScanne
    ...>     System.out.printf("Key : %-52s  Value : %s\n", entry.getKey(), entry.getValue());
    ...>   }
    ...> }
+Key : id0001 hero:alias [] 1654779673027 false              Value : Batman
+Key : id0001 hero:villainsCaptured [] 1654780041402 false   Value : 12
+Key : id0002 hero:alias [] 1654779673027 false              Value : Robin
+Key : id0002 hero:villainsCaptured [] 1654780041402 false   Value : 5
 ```
