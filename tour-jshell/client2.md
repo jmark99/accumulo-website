@@ -24,7 +24,7 @@ Let's start by using table operations to list the default tables and instance op
 the instance ID.
 
 ```commandline
-jshell> client.tableOperations().list().forEach(System.out::println)
+jshell> client.tableOperations().list().forEach(System.out::println);
 accumulo.metadata
 accumulo.replication
 accumulo.root

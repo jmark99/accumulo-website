@@ -9,6 +9,7 @@ exists, let's delete and begin fresh.
 
 ```commandline
 client.tableOperations().delete("GothamPD");
+client.securityOperations().dropLocalUser("commissioner"); 
 ```
 
 Create a table called "GothamPD".
@@ -64,7 +65,7 @@ jshell> try (BatchWriter writer = client.createBatchWriter("GothamPD")) {
     ...> }
 ```
 
-Now let's scan again.
+Now let's scan.
 
 ```commandline
 jshell> try (ScannerBase scan = client.createScanner("GothamPD", Authorizations.EMPTY)) {
@@ -90,10 +91,10 @@ Let's add the `auths` authorization to the default root user and scan again.
 
 ```commandline
  jshell> try (ScannerBase scan = client.createScanner("GothamPD", auths)) {
-   ...>   System.out.println("Gotham Police Department Persons of Interest:");
-   ...>     for (Map.Entry<Key, Value> entry : scan)
-   ...>       System.out.printf("Key : %-50s  Value : %s\n", entry.getKey(), entry.getValue());
-   ...>     }
+   ...>    System.out.println("Gotham Police Department Persons of Interest:");
+   ...>      for (Map.Entry<Key, Value> entry : scan)
+   ...>        System.out.printf("Key : %-50s  Value : %s\n", entry.getKey(), entry.getValue());
+   ...>      }
 Gotham Police Department Persons of Interest:
 |  Exception java.lang.RuntimeException: org.apache.accumulo.core.client.AccumuloSecurityException: Error BAD_AUTHORIZATIONS for user root on table GothamPD(ID:2) - The user does not have the specified authorizations assigned
 |        at ScannerIterator.getNextBatch (ScannerIterator.java:180)
@@ -119,7 +120,7 @@ Gotham Police Department Persons of Interest:
 
 This results in an error since the root user doesn't have the authorizations we tried to pass to the Scanner
 
-Now, Create a second client for the commissioner user and output all the rows visible to them.
+Now, create a second client for the commissioner user and output all the rows visible to them.
 Make sure to pass the proper authorizations.
 
 ```commandline

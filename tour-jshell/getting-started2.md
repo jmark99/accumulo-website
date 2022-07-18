@@ -13,7 +13,7 @@ $ accumulo jshell
 ```
 
 This will present you with a Java JShell interface with the required Accumulo libraries pre-loaded 
-and a working Accumulo  ```client``` object.
+and a working Accumulo ```client``` object.
 
 ```commandline
 Preparing JShell for Apache Accumulo
@@ -31,8 +31,6 @@ JShell has a few commands that can be helpful.
 `/imports` lists the currently loaded imports in the JShell session.
 
 ```commandline
-jshell> /imports
-
 jshell> /imports
 |    import java.io.*
 |    import java.math.*
@@ -71,7 +69,7 @@ jshell> /imports
 
 ```commandline
 jshell> /vars
-|    URL clientPropUrl = file:/home/mark/dev/fluo-uno/install/accumulo-2.1.0-SNAPSHOT/conf/accumulo-client.properties
+|    URL clientPropUrl = file:<path_to_accumulo_dir>/conf/accumulo-client.properties
 |    AccumuloClient client = org.apache.accumulo.core.clientImpl.ClientContext@7cbee484
 ```
 

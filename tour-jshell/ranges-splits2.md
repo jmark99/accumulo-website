@@ -10,14 +10,14 @@ Range r2 = new Range(row);               // Creates a range that covers an entir
 Range r3 = new Range(startRow, endRow);  // Creates a range from startRow inclusive to endRow inclusive.
 ```
 
-A `Scanner` by default will scan all `Key`s in a table but this can be inefficient. It is a good practice to
+A `Scanner` by default will scan all ```Key```'s in a table but this can be inefficient. It is a good practice to
 set a range on a Scanner.
 
 ```commandline
 scanner.setRange(new Range("id0000", "id0010"));  // returns rows from id0000 to id0010
 ```
 
-As your data grows larger, Accumulo will split tables into smaller pieces called `Tablet`s which can
+As your data grows larger, Accumulo will split tables into smaller pieces called ```Tablet```'s which can
 be distributed across multiple Tablet Servers. By default, a table will get split into `Tablet`s on
 row boundaries, guaranteeing an entire row will be on one Tablet Server.  We have the ability to
 tell Accumulo where to split tables by setting split points. This is done using `addSplits` in the 

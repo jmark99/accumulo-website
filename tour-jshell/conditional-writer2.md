@@ -72,7 +72,6 @@ jshell> Future<Void> modifyAddress(AccumuloClient client, String id, Function<St
    ...>       newAddr = modifier.apply(currAddr);
    ...>       System.out.printf("Thread %3d attempting change %20s -> %-20s\n",
    ...>       Thread.currentThread().getId(), "'"+currAddr+"'", "'"+newAddr+"'");
-   ...> 
    ...>     } while (!setAddress(client, id, currAddr, newAddr));
    ...>   });
    ...> }

@@ -70,6 +70,6 @@ Key : id0003 villain:alias [] 1511306370025 false         Value : Joker
 Key : id0003 villain:name [] 1511306370025 false          Value : Unknown
 Key : id0003 villain:wearsCape? [] 1511306370025 false    Value : false
 ```
-Timestamps will differ:
+Timestamps will differ.
 
 
